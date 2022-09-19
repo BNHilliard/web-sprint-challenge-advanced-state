@@ -1,34 +1,76 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-export default function Quiz(props) {
+import { connect } from 'react-redux'
+import * as actionCreators from '../state/action-creators'
+import axios from 'axios'
+
+function Quiz(props) {
+  
+  const [loading, setLoading] = useState(true)
+
+  const [selected, setSelected] = useState(0);
+
+
+  const {question, answers, quiz_id} = props.quiz;
+
+  const loadingString = 'Loading next quiz...'
+
+  useEffect(()=>{
+    if (!props.quiz){
+      setLoading(true)
+    props.fetchQuiz()
+    setLoading(false)
+  }
+  }, [])
+
+
+  const onSubmit = evt => {
+    const onSubmit = evt => {
+      evt.preventDefault()
+      props.postAnswer()
+    }
+  }
+
+  const handleSelect = (num) => {
+    setSelected(num)
+  }
+
+
+
+  
+
   return (
+    
     <div id="wrapper">
-      {
-        // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+      { props.quiz ? (
           <>
-            <h2>What is a closure?</h2>
+            <h2>{props.quiz.question}</h2>
 
             <div id="quizAnswers">
-              <div className="answer selected">
-                A function
-                <button>
-                  SELECTED
+              <div className={`answer ${selected === 1 ? 'selected' : 'answer'}`}>
+             {props.quiz.answers[0].text}
+                <button label={ selected === 1 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(1)}}>
+                {selected == 1 ? "SELECTED" : "Select"}
                 </button>
               </div>
 
-              <div className="answer">
-                An elephant
-                <button>
-                  Select
+              <div className={`answer ${selected === 2 ? 'selected' : 'answer'}`}>
+              {props.quiz.answers[1].text}
+                <button label={ selected === 2 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(2)}}>
+                {selected == 2 ? "SELECTED" : "Select"}
                 </button>
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button id="submitAnswerBtn" onSubmit={onSubmit} disabled={true}>Submit answer</button>
           </>
-        ) : 'Loading next quiz...'
-      }
+        ) : loadingString  }
     </div>
   )
 }
+
+const mapStateToProps = (store) => {
+  return store
+}
+
+export default connect(mapStateToProps, actionCreators)(Quiz)

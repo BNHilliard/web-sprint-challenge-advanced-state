@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "fkill :9000 :3000 -s && concurrently \"npm:backend\" \"npm:frontend\"",
-    "test": "cross-env NODE_ENV=testing jest --watch",
+    "test": "cross-env NODE_ENV=testing jest",
     "webpack": "cross-env NODE_ENV=production webpack",
     "heroku-postbuild": "npm run webpack",
     "frontend": "webpack serve --open",
@@ -44,7 +44,7 @@
     "cors": "2.8.5",
     "express": "4.18.1",
     "react": "18.1.0",
-    "react-dom": "18.1.0",
+    "react-dom": "^18.1.0",
     "react-redux": "8.0.2",
     "react-router-dom": "6.3.0",
     "redux": "4.2.0",
