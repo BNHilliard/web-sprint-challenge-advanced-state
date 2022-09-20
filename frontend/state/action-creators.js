@@ -32,10 +32,10 @@ export function setQuiz(quiz) {
   return { type: types.SET_QUIZ_INTO_STATE, payload: quiz  }
  }
 
-export function inputChange({value}) { 
+export function inputChange({name, value}) { 
 return {
   type: types.INPUT_CHANGE, 
-  payload: {value}
+  payload: {name, value}
   }
 }
 
