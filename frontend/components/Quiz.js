@@ -8,9 +8,6 @@ function Quiz(props) {
   
   const [loading, setLoading] = useState(true)
 
-  const [selected, setSelected] = useState(0);
-
-
   const {question, answers, quiz_id} = props.quiz;
 
   const loadingString = 'Loading next quiz...'
@@ -51,13 +48,13 @@ function Quiz(props) {
               <div className={`answer ${props.selectedAnswer === 1 ? 'selected' : 'answer'}`}>
              {props.quiz.answers[0].text}
                 <button label={ props.selectedAnswer === 1 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(1)}}>
-                {selected == 1 ? "SELECTED" : "Select"}
+                {props.selectedAnswer === 1 ? "SELECTED" : "Select"}
                 </button>
               </div>
 
               <div className={`answer ${props.selectedAnswer === 2 ? 'selected' : 'answer'}`}>
               {props.quiz.answers[1].text}
-                <button label={ selected === 2 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(2)}}>
+                <button label={ props.selectedAnswer === 2 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(2)}}>
                 {props.selectedAnswer == 2 ? "SELECTED" : "Select"}
                 </button>
               </div>

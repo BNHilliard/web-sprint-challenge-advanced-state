@@ -49,11 +49,11 @@ export function resetForm() {
   }
  }
 
-// ❗ Async action 
 
 
 
 export function fetchQuiz() {
+  //done
   const URL = 'http://localhost:9000/api/quiz/next'
   return function (dispatch) {
     axios.get(URL)
@@ -64,14 +64,14 @@ export function fetchQuiz() {
     .catch((err) => {
       console.log({err})
     })
-      
-    // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
-    // On successful GET:
-    // - Dispatch an action to send the obtained quiz to its state
   }
 }
-export function postAnswer(evt) {
-  evt.preventDefault()
+
+
+
+
+export function postAnswer() {
+ 
   return function (dispatch) {
 
     // On successful POST:
