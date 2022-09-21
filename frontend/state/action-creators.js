@@ -41,17 +41,10 @@ export function fetchQuiz() {
   return function (dispatch) {
     axios.get(URL)
     .then((res) => {
-      console.log(res.data)
       dispatch({ type: types.SET_QUIZ_INTO_STATE, payload: res.data})
-    })
-    .catch((err) => {
-      console.log({err})
-    })
+    }).catch((err) => { console.log({err})})
   }
 }
-
-
-
 
 export function postAnswer(quizID, answerID) {
   console.log(quizID, answerID)
@@ -80,7 +73,7 @@ export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer) {
       .then((res) => {
         console.log(res)
         dispatch({type: types.SET_INFO_MESSAGE, payload: `Congrats: "${newQuestion}" is a great question!`})
-        dispatch(resetForm())
+        dispatch({type: types.RESET_FORM})
       })
       .catch((err) => {
         ({type: types.SET_INFO_MESSAGE, payload: err.message})
