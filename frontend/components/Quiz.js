@@ -63,7 +63,7 @@ function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" onSubmit={onSubmit} disabled={true}>Submit answer</button>
+            <button id="submitAnswerBtn" onSubmit={onSubmit} disabled={!props.selectedAnswer}>Submit answer</button>
           </>
         ) : loadingString  }
     </div>
