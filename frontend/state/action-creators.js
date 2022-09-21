@@ -6,54 +6,37 @@ import { ThemeConsumer } from 'styled-components'
 
 // ❗ You don't need to add extra action creators to achieve MVP
 export function moveClockwise() {  
-  return {
-    type: types.MOVE_CLOCKWISE
-  } 
+  return { type: types.MOVE_CLOCKWISE } 
 }
 
 export function moveCounterClockwise() {
-  return {
-    type: types.MOVE_COUNTERCLOCKWISE
-  }
+  return { type: types.MOVE_COUNTERCLOCKWISE }
  }
 
 export function selectAnswer(num) { 
-  return {
-    type: types.SET_SELECTED_ANSWER, 
-    payload: num
-  }
+  return { type: types.SET_SELECTED_ANSWER, payload: num }
 }
 
 export function setMessage (message){ 
   return function (dispatch) {
     return { type: SET_INFO_MESSAGE, payload: message }
   }
-
 }
 
 export function setQuiz(quiz) {
-  return { type: types.SET_QUIZ_INTO_STATE, payload: quiz  }
+    return { type: types.SET_QUIZ_INTO_STATE, payload: quiz  }
  }
 
 export function inputChange({name, value}) { 
-return {
-  type: types.INPUT_CHANGE, 
-  payload: {name, value}
-  }
+return { type: types.INPUT_CHANGE, payload: {name, value} }
 }
 
 
 export function resetForm() {
-  return {
-    type: types.RESET_FORM
-  }
+  return { type: types.RESET_FORM }
  }
 
-
-
-
 export function fetchQuiz() {
-  //done
   const URL = 'http://localhost:9000/api/quiz/next'
   return function (dispatch) {
     axios.get(URL)
@@ -70,9 +53,19 @@ export function fetchQuiz() {
 
 
 
-export function postAnswer() {
- 
+export function postAnswer(quizID, answerID) {
+  console.log(quizID, answerID)
+ const URL = 'http://localhost:9000/api/quiz/answer'
   return function (dispatch) {
+    axios.post(URL, { "quiz_id" : `${quizID}`, "answer_id": `${answerID}` })
+    .then((res) => {
+    console.log(res)
+    dispatch({type: types.SET_SELECTED_ANSWER, payload: null})
+    dispatch({type: types.SET_INFO_MESSAGE, payload: res.data.message})
+    dispatch(fetchQuiz())
+    }).catch((err) => {
+      console.log({err})
+    })
 
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
@@ -86,7 +79,7 @@ export function postQuiz(newQuestion, newTrueAnswer, newFalseAnswer) {
     axios.post(URL, { "question_text": `${newQuestion}`, "true_answer_text": `${newTrueAnswer}`, "false_answer_text": `${newFalseAnswer}` })
       .then((res) => {
         console.log(res)
-        dispatch({type: types.SET_INFO_MESSAGE, payload: `Congrats: ${res.data.question} is a great question!`})
+        dispatch({type: types.SET_INFO_MESSAGE, payload: `Congrats: "${newQuestion}" is a great question!`})
         dispatch(resetForm())
       })
       .catch((err) => {

@@ -8,7 +8,7 @@ function Quiz(props) {
   
   const [loading, setLoading] = useState(true)
 
-  const {question, answers, quiz_id} = props.quiz;
+
 
   const loadingString = 'Loading next quiz...'
 
@@ -22,22 +22,15 @@ function Quiz(props) {
   }, [])
 
 
-  const onSubmit = evt => {
-    const onSubmit = evt => {
-      evt.preventDefault()
-      props.postAnswer()
+    const onSubmit = evt => {     
+      const quizID = props.quiz.quiz_id
+      const answerID = props.selectedAnswer === 1 ? props.quiz.answers[0].answer_id : props.quiz.answers[1].answer_id
+      props.postAnswer(quizID, answerID)
     }
-  }
-
-  const handleSelect = (num) => {
-    props.selectAnswer(num)
-  }
-
-
-
   
 
   return (
+
     
     <div id="wrapper">
       { props.quiz ? (
@@ -47,20 +40,20 @@ function Quiz(props) {
             <div id="quizAnswers">
               <div className={`answer ${props.selectedAnswer === 1 ? 'selected' : 'answer'}`}>
              {props.quiz.answers[0].text}
-                <button label={ props.selectedAnswer === 1 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(1)}}>
+                <button label={ props.selectedAnswer === 1 ? 'SELECTED' : 'Select'} onClick={()=>{props.selectAnswer(1)}}>
                 {props.selectedAnswer === 1 ? "SELECTED" : "Select"}
                 </button>
               </div>
 
               <div className={`answer ${props.selectedAnswer === 2 ? 'selected' : 'answer'}`}>
               {props.quiz.answers[1].text}
-                <button label={ props.selectedAnswer === 2 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(2)}}>
-                {props.selectedAnswer == 2 ? "SELECTED" : "Select"}
+                <button label={ props.selectedAnswer === 2 ? 'SELECTED' : 'Select'} onClick={()=>{props.selectAnswer(2)}}>
+                {props.selectedAnswer === 2 ? "SELECTED" : "Select"}
                 </button>
               </div>
             </div>
 
-            <button id="submitAnswerBtn" onSubmit={onSubmit} disabled={!props.selectedAnswer}>Submit answer</button>
+            <button type='submit' id="submitAnswerBtn" onClick={onSubmit} disabled={!props.selectedAnswer}>Submit answer</button>
           </>
         ) : loadingString  }
     </div>

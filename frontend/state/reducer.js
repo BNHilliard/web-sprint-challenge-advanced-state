@@ -21,6 +21,7 @@ function wheel(state = initialWheelState, action) {
   return state
 }
 
+
 const initialQuizState = ''
 function quiz(state = initialQuizState, action) {
   switch(action.type) {
@@ -30,6 +31,7 @@ function quiz(state = initialQuizState, action) {
   }
   return state
 }
+
 
 const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {

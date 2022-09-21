@@ -4,7 +4,6 @@ import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
 
-  const { } = props
 
   useEffect(() => {
     console.log(`form rendered`)
@@ -17,9 +16,12 @@ export function Form(props) {
     console.log(props)
   }
 
-  const onSubmit = evt => {
-    evt.preventDefault()
-    props.postQuiz()
+  const onSubmit = evt => {    
+    evt.preventDefault() 
+    const newQuestion = props.form.newQuestion
+    const newTrueAnswer = props.form.newTrueAnswer
+    const newFalseAnswer = props.form.newFalseAnswer
+    props.postQuiz(newQuestion, newTrueAnswer, newFalseAnswer)
   }
 
   return (
@@ -28,7 +30,7 @@ export function Form(props) {
       <input name="newQuestion" maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" value={props.newQuestion}/>
       <input name="newTrueAnswer" maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" value ={props.newTrueAnswer} />
       <input name="newFalseAnswer" maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" value={props.newFalseAnswer}/>
-      <button id="submitNewQuizBtn">Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={!props.form.newQuestion, !props.form.newTrueAnswer, !props.form.newFalseAnswer}>Submit new quiz</button>
     </form>
   )
 }
