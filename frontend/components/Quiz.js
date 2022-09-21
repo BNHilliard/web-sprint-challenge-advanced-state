@@ -20,6 +20,7 @@ function Quiz(props) {
       setLoading(true)
     props.fetchQuiz()
     setLoading(false)
+    console.log(props)
   }
   }, [])
 
@@ -32,7 +33,7 @@ function Quiz(props) {
   }
 
   const handleSelect = (num) => {
-    setSelected(num)
+    props.selectAnswer(num)
   }
 
 
@@ -47,17 +48,17 @@ function Quiz(props) {
             <h2>{props.quiz.question}</h2>
 
             <div id="quizAnswers">
-              <div className={`answer ${selected === 1 ? 'selected' : 'answer'}`}>
+              <div className={`answer ${props.selectedAnswer === 1 ? 'selected' : 'answer'}`}>
              {props.quiz.answers[0].text}
-                <button label={ selected === 1 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(1)}}>
+                <button label={ props.selectedAnswer === 1 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(1)}}>
                 {selected == 1 ? "SELECTED" : "Select"}
                 </button>
               </div>
 
-              <div className={`answer ${selected === 2 ? 'selected' : 'answer'}`}>
+              <div className={`answer ${props.selectedAnswer === 2 ? 'selected' : 'answer'}`}>
               {props.quiz.answers[1].text}
                 <button label={ selected === 2 ? 'SELECTED' : 'Select'} onClick={()=>{handleSelect(2)}}>
-                {selected == 2 ? "SELECTED" : "Select"}
+                {props.selectedAnswer == 2 ? "SELECTED" : "Select"}
                 </button>
               </div>
             </div>

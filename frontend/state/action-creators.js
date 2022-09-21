@@ -17,8 +17,11 @@ export function moveCounterClockwise() {
   }
  }
 
-export function selectAnswer() { 
-
+export function selectAnswer(num) { 
+  return {
+    type: types.SET_SELECTED_ANSWER, 
+    payload: num
+  }
 }
 
 export function setMessage (message){ 
@@ -67,8 +70,8 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   }
 }
-export function postAnswer() {
- 
+export function postAnswer(evt) {
+  evt.preventDefault()
   return function (dispatch) {
 
     // On successful POST:

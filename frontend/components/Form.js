@@ -20,7 +20,6 @@ export function Form(props) {
   const onSubmit = evt => {
     evt.preventDefault()
     props.postQuiz()
-    
   }
 
   return (
